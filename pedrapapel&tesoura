@@ -1,0 +1,43 @@
+class Jogador:
+    def __init__(self, nome):
+        self.nome = nome
+        self.jogando = ""
+        self.resultado = ""
+
+    def jogar(self):
+        opcoes = {1: "pedra", 2: "papel", 3: "tesoura"}
+        numero = int(input(f"{self.nome}, digite:\n1 para jogar pedra\n2 para jogar papel\n3 para jogar tesoura\n"))
+
+        while numero not in opcoes:
+            numero = int(input(
+                "Você digitou um número inválido. Digite:\n1 para jogar pedra\n2 para jogar papel\n3 para jogar tesoura\n"))
+
+        self.jogando = opcoes[numero]
+        print(f"{self.nome} jogou {self.jogando}")
+
+
+def determinar_resultado(jogador1, jogador2):
+    resultados = {
+        ("pedra", "tesoura"): (jogador1, jogador2),
+        ("papel", "pedra"): (jogador1, jogador2),
+        ("tesoura", "papel"): (jogador1, jogador2),
+        ("tesoura", "pedra"): (jogador2, jogador1),
+        ("pedra", "papel"): (jogador2, jogador1),
+        ("papel", "tesoura"): (jogador2, jogador1)
+    }
+
+    if jogador1.jogando == jogador2.jogando:
+        print("O resultado deu empate")
+    else:
+        vencedor, perdedor = resultados[(jogador1.jogando, jogador2.jogando)]
+        vencedor.resultado = "venceu"
+        perdedor.resultado = "perdeu"
+        print(f"{vencedor.nome} {vencedor.resultado} contra {perdedor.nome}")
+
+#Criação dos jogadores e execução do jogo
+j1 = Jogador("Lizandro")
+j1.jogar()
+j2 = Jogador("Tiago")
+j2.jogar()
+
+determinar_resultado(j1, j2)
